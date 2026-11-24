@@ -14,6 +14,11 @@ Frontend en **React** de AmaruHouse, la app de arriendos en Colombia con
   tocar una ciudad filtra el listado.
 - **Cuenta de usuario**: registro, ingreso y cierre de sesión con cookies httpOnly.
 - **Publicar inmueble** (`POST /inmuebles`) y **subir fotos** (`POST /inmuebles/{id}/imagenes`).
+- **Mis inmuebles**: con sesión aparece una sección (y un acceso en el menú) con
+  solo los inmuebles que publicó la cuenta (`GET /inmuebles/mios`), filtro por
+  estado, **editar** (mismo formulario de publicar; el `PATCH` lleva solo los
+  campos que cambiaron) y **eliminar** con confirmación. El back vuelve a
+  comprobar que quien edita o borra sea el dueño.
 - **Mis favoritos**: sección con la lista de cada cuenta (hay que ingresar para
   guardar), contador en el menú y orden por fecha o precio.
 - **Tour 360°** con Three.js en el detalle de cada inmueble.

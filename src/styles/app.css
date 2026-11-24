@@ -1387,3 +1387,84 @@
     font-size: 0.72rem;
     color: var(--texto-suave);
 }
+
+/* ---------- Mis inmuebles ---------- */
+.mis-enlace > svg {
+    color: var(--turquesa);
+}
+
+.mis-enlace:hover,
+.mis-enlace.active {
+    border-color: var(--turquesa);
+    background: var(--turquesa-claro);
+}
+
+.mis-icono {
+    color: var(--turquesa);
+    background: var(--turquesa-claro);
+}
+
+.mis-inmuebles .controles-lista {
+    align-items: center;
+}
+
+.card-acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--borde);
+}
+
+.card-acciones .btn,
+.detalle-dueno .btn {
+    padding: 9px 14px;
+    font-size: 0.88rem;
+}
+
+.btn-peligro {
+    background: transparent;
+    color: #c0392b;
+    border: 1.5px solid #f1c4be;
+}
+
+.btn-peligro:hover {
+    background: #fdf0ee;
+    border-color: #c0392b;
+}
+
+.btn-peligro-solido {
+    background: #c0392b;
+    color: #fff;
+    border: 1.5px solid #c0392b;
+}
+
+.btn-peligro-solido:hover {
+    background: #a5301f;
+}
+
+.detalle-dueno {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.confirmar-eliminar {
+    text-align: center;
+}
+
+.confirmar-eliminar .form-acciones {
+    justify-content: center;
+}
+
+.confirmar-icono {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #c0392b;
+    background: #fdf0ee;
+}

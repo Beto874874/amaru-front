@@ -7,7 +7,7 @@ import { fotoReferencia } from '../utils/fotos.js';
 import Modal360, { PANORAMA_DEMO } from './tour360/Modal360.jsx';
 
 export default function DetalleInmueble({ id }) {
-  const { cerrarModal, favoritos, alternarFavorito, actualizarFavorito, mostrarToast } = useApp();
+  const { cerrarModal, abrirModal, favoritos, alternarFavorito, actualizarFavorito, mostrarToast } = useApp();
   const [inmueble, setInmueble] = useState(null);
   const [error, setError] = useState(null);
   const [fotoActiva, setFotoActiva] = useState(0);
@@ -182,6 +182,17 @@ export default function DetalleInmueble({ id }) {
                     <li key={a}>{textoAlerta(a)}</li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {inmueble.es_mio && (
+              <div className="detalle-dueno">
+                <button type="button" className="btn btn-outline" onClick={() => abrirModal('editar', inmueble)}>
+                  Editar
+                </button>
+                <button type="button" className="btn btn-peligro" onClick={() => abrirModal('eliminar', inmueble)}>
+                  Eliminar
+                </button>
               </div>
             )}
 
