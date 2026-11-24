@@ -6,7 +6,7 @@ const ENLACES = [
   ['propiedades', 'Inmuebles'],
   ['mapa', 'Mapa'],
   ['como-funciona', 'Cómo funciona'],
-  ['equipo', 'Nosotros'],
+  ['nosotros', 'Nosotros'],
   ['contacto', 'Contacto'],
 ];
 

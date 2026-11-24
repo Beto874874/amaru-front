@@ -7,7 +7,7 @@ import MisInmuebles from './components/MisInmuebles.jsx';
 import ConfirmarEliminar from './components/ConfirmarEliminar.jsx';
 import MapaCiudades from './components/MapaCiudades.jsx';
 import ComoFunciona from './components/ComoFunciona.jsx';
-import Equipo from './components/Equipo.jsx';
+import Nosotros from './components/Nosotros.jsx';
 import Contacto from './components/Contacto.jsx';
 import Footer from './components/Footer.jsx';
 import Toast from './components/Toast.jsx';
@@ -61,7 +61,7 @@ export default function App() {
         <MisInmuebles />
         <MapaCiudades onElegirCiudad={aplicarFiltros} />
         <ComoFunciona />
-        <Equipo />
+        <Nosotros />
         <Contacto />
       </main>
       <Footer />

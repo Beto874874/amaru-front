@@ -22,7 +22,9 @@ Frontend en **React** de AmaruHouse, la app de arriendos en Colombia con
 - **Mis favoritos**: sección con la lista de cada cuenta (hay que ingresar para
   guardar), contador en el menú y orden por fecha o precio.
 - **Tour 360°** con Three.js en el detalle de cada inmueble.
-- **Equipo**: tarjetas de los creadores con perfil que se abre con zoom.
+- **Nosotros**: sección institucional (quiénes somos, misión, visión y valores)
+  con una sola imagen representativa. El texto está en `src/data/nosotros.js`
+  para ajustarlo sin tocar el diseño.
 - **Contacto hecho con React-Bootstrap** (reto del curso): `Row`/`Col`, `Card`,
   `Form` con validación y `FloatingLabel`, `ListGroup`, `Accordion`, `Badge`,
   `Alert`, `Spinner` y `Toast`.
@@ -72,10 +74,10 @@ src/
 ├── api/
 │   ├── cliente.js        # fetch con cookies, refresh único y errores de la API
 │   └── amaru.js          # una función por endpoint
-├── components/           # Header, Hero, Inmuebles, MapaCiudades, Equipo,
-│                         # Contacto (Bootstrap), modales de detalle, ingreso y publicar
+├── components/           # Header, Hero, Inmuebles, MapaCiudades,
+│                         # Contacto (Bootstrap), Nosotros, Mis inmuebles y modales
 ├── context/AppContext.jsx# sesión, catálogos, favoritos, toast y modales
-├── data/                 # equipo y coordenadas de las ciudades
+├── data/                 # texto de Nosotros y coordenadas de las ciudades
 ├── hooks/                # estadísticas por ciudad
 ├── styles/
 │   ├── estilos.css       # diseño original de Amaru
