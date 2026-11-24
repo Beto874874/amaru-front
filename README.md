@@ -21,7 +21,7 @@ Frontend en **React** de AmaruHouse, la app de arriendos en Colombia con
   comprobar que quien edita o borra sea el dueño.
 - **Mis favoritos**: sección con la lista de cada cuenta (hay que ingresar para
   guardar), contador en el menú y orden por fecha o precio.
-- **Tour 360°** con Three.js en el detalle de cada inmueble.
+- **Recorrido 3D de demostración** con Three.js en el detalle de cada inmueble.
 - **Nosotros**: sección institucional (quiénes somos, misión, visión y valores)
   con una sola imagen representativa. El texto está en `src/data/nosotros.js`
   para ajustarlo sin tocar el diseño.
@@ -92,30 +92,27 @@ El reto pide usar Bootstrap en la sección de contactos. Para que no cambie el
 diseño del resto de la página, Bootstrap se compila con Sass **dentro de la
 clase `.bs-scope`**, con los colores de Amaru (turquesa y naranja).
 
-## Tour 360° con Three.js
+## Recorrido 3D de demostración (Three.js)
 
-En el detalle de cada inmueble, el botón **360°** abre un visor panorámico hecho
-con [Three.js](https://threejs.org) y
-[React Three Fiber](https://r3f.docs.pmnd.rs) (`src/components/tour360/`).
+En el detalle de cada inmueble, el botón **Recorrido 3D (demo)** abre un visor
+hecho con [Three.js](https://threejs.org) y
+[React Three Fiber](https://r3f.docs.pmnd.rs) (`src/components/demo3d/`).
 
-- La foto panorámica (proporción 2:1) se pega por dentro de una esfera y la
-  cámara queda en el centro: arrastrar para mirar, rueda o botones para zoom,
-  giro automático y pantalla completa.
-- Three.js se carga **solo cuando alguien abre el tour** (`React.lazy`), así la
-  página principal no se vuelve pesada en celulares.
-- **Probar mi foto 360°**: permite cargar una panorámica propia y verla al
-  instante, sin subirla al servidor.
-- Mientras el back no guarde fotos 360°, se muestra una panorámica de ejemplo.
-
-### Qué falta en el back para fotos 360° reales
-
-1. Aceptar panorámicas más grandes: hoy las fotos se reducen a 1600 px de ancho
-   y una 360° necesita entre 4000 y 6000 px para no verse borrosa.
-2. Marcar la foto como panorámica, por ejemplo con un campo `es_360` en
-   `inmueble_imagen` que llegue en `imagenes[]` del detalle.
-
-El front ya busca `imagenes.find((im) => im.es_360)`: en cuanto el back lo
-envíe, el botón cambia de "Demo 360°" a "Ver en 360°" con la foto real.
+- No hay planos reales de los inmuebles, así que hay **tres interiores
+  genéricos** construidos en código: apartaestudio, apartamento de dos
+  habitaciones y casa con sala-comedor (`modelos.jsx`). Todo son cajas y
+  cilindros de Three.js con materiales simples (`muebles.jsx`): no se descarga
+  ningún modelo 3D.
+- Cada inmueble recibe siempre el mismo interior: se elige con un hash de su
+  `id` (`modeloPara`).
+- El visor dice claramente que es una **demostración** y no el inmueble real.
+- Controles: arrastrar para orbitar, rueda o pellizco para zoom, botones de
+  acercar/alejar, giro automático, vista inicial y pantalla completa.
+- Rendimiento: Three.js se carga solo al abrir la demo (`React.lazy`) y el
+  Canvas usa `frameloop="demand"`, es decir, dibuja solo cuando algo se mueve.
+- Limpieza: al cerrar se liberan los controles, los materiales y la textura
+  compartidos (`dispose()`), y React Three Fiber libera geometrías y el
+  contexto WebGL.
 
 ## Pendientes conocidos
 
