@@ -1512,7 +1512,6 @@ a {
     }
 
     .hero-grid,
-    .nosotros-top,
     .mapa-wrapper,
     .contacto-wrapper,
     .footer-grid {
@@ -1599,11 +1598,6 @@ a {
 
     .float-1 { left: 8px; bottom: 16px; }
     .float-2 { right: 8px; top: 16px; }
-
-    .nosotros-pilares,
-    .nosotros-valores ul {
-        grid-template-columns: 1fr;
-    }
 
     .mapa-box {
         min-height: 420px;

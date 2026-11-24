@@ -1587,8 +1587,26 @@
     line-height: 1.6;
 }
 
-@media (min-width: 641px) and (max-width: 1024px) {
+/* Las media queries van aquí (y no en estilos.css) porque app.css se carga
+   después: con la misma especificidad, la última regla gana. */
+@media (max-width: 1024px) {
+    .nosotros-top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
     .nosotros-valores ul {
         grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .nosotros-pilares,
+    .nosotros-valores ul {
+        grid-template-columns: 1fr;
+    }
+
+    .nosotros-pilar {
+        padding: 22px;
     }
 }

@@ -12,9 +12,14 @@ import { modeloPara } from './modelos.jsx';
 // cambia (arrastrar, zoom, giro automático) en vez de 60 veces por segundo.
 // Con la escena quieta la GPU no trabaja y el celular no se calienta.
 
-/** Posición inicial de la cámara según el tamaño del plano. */
-function vistaInicial(modelo) {
-  const d = Math.max(modelo.ancho, modelo.fondo) * 1.45;
+/**
+ * Posición inicial de la cámara según el tamaño del plano y la forma del visor.
+ * El campo de visión de la cámara es VERTICAL: en un celular en vertical (más
+ * alto que ancho) el plano se cortaría a los lados, así que se aleja más.
+ */
+function vistaInicial(modelo, proporcion = 1.5) {
+  const ajuste = Math.min(2.2, Math.max(1, 1.25 / proporcion));
+  const d = Math.max(modelo.ancho, modelo.fondo) * 1.45 * ajuste;
   return { posicion: [d * 0.55, d * 0.8, d * 0.85], minimo: 3, maximo: d * 1.8 };
 }
 
@@ -22,11 +27,15 @@ function vistaInicial(modelo) {
  * OrbitControls de three.js montado a mano (como en el resto del proyecto, sin
  * la librería drei). Expone zoom/reinicio a los botones HTML por `apiRef`.
  */
-function Controles({ vista, autoGiro, onInteraccion, apiRef }) {
+function Controles({ modelo, autoGiro, onInteraccion, apiRef }) {
   const { camera, gl, invalidate } = useThree();
   const controles = useRef(null);
 
   useEffect(() => {
+    // Se mide el canvas una sola vez al montar: recalcular en cada resize
+    // movería la cámara mientras la persona la está usando.
+    const { clientWidth, clientHeight } = gl.domElement;
+    const vista = vistaInicial(modelo, clientWidth / Math.max(1, clientHeight));
     camera.position.set(...vista.posicion);
     const c = new OrbitControls(camera, gl.domElement);
     c.enableDamping = true;
@@ -65,7 +74,7 @@ function Controles({ vista, autoGiro, onInteraccion, apiRef }) {
       c.dispose();
       apiRef.current = null;
     };
-  }, [camera, gl, invalidate, vista, onInteraccion, apiRef]);
+  }, [camera, gl, invalidate, modelo, onInteraccion, apiRef]);
 
   useEffect(() => {
     if (!controles.current) return;
@@ -128,7 +137,6 @@ class SinWebGL extends Component {
 
 export default function Visor3D({ idInmueble, titulo }) {
   const modelo = useMemo(() => modeloPara(idInmueble), [idInmueble]);
-  const vista = useMemo(() => vistaInicial(modelo), [modelo]);
   const contenedor = useRef(null);
   const api = useRef(null);
   const [autoGiro, setAutoGiro] = useState(true);
@@ -163,11 +171,11 @@ export default function Visor3D({ idInmueble, titulo }) {
           frameloop="demand"
           shadows
           dpr={[1, 1.75]}
-          camera={{ fov: 40, near: 0.1, far: 200, position: vista.posicion }}
+          camera={{ fov: 40, near: 0.1, far: 200, position: vistaInicial(modelo).posicion }}
           gl={{ antialias: true }}
         >
           <Escena modelo={modelo} />
-          <Controles vista={vista} autoGiro={autoGiro} onInteraccion={alInteractuar} apiRef={api} />
+          <Controles modelo={modelo} autoGiro={autoGiro} onInteraccion={alInteractuar} apiRef={api} />
         </Canvas>
       </SinWebGL>
 
