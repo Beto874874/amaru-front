@@ -3,7 +3,7 @@ import Modal from './Modal.jsx';
 import { obtenerInmueble, subirImagenes } from '../api/amaru.js';
 import { useApp } from '../context/AppContext.jsx';
 import { capitalizar, fechaCorta, formatoArea, formatoCOP, textoAlerta } from '../utils/formato.js';
-import { fotoReferencia } from '../utils/fotos.js';
+import { galeriaReferencia, nombreCategoria } from '../utils/fotos.js';
 import Modal360, { PANORAMA_DEMO } from './tour360/Modal360.jsx';
 
 export default function DetalleInmueble({ id }) {
@@ -49,6 +49,10 @@ export default function DetalleInmueble({ id }) {
   // Cuando el back marque fotos panorámicas (campo es_360), se usa la real;
   // mientras tanto se muestra una panorámica de ejemplo.
   const foto360 = inmueble?.imagenes.find((im) => im.es_360);
+  // Sin fotos propias se muestra una galería de referencia de su categoría
+  // (parqueadero, local, finca…), marcada como tal para no confundir.
+  const sinFotos = inmueble && inmueble.imagenes.length === 0;
+  const galeria = inmueble ? (sinFotos ? galeriaReferencia(inmueble.tipo, inmueble.id) : inmueble.imagenes) : [];
 
   return (
     <Modal titulo={titulo} onCerrar={cerrarModal} ancho="ancho" className="detalle">
@@ -70,18 +74,18 @@ export default function DetalleInmueble({ id }) {
           <div className="detalle-galeria">
             <div className="detalle-foto">
               <img
-                src={inmueble.imagenes[fotoActiva]?.url ?? fotoReferencia(inmueble.tipo, inmueble.id)}
-                alt={inmueble.imagenes.length ? `Foto ${fotoActiva + 1} de ${titulo}` : 'Foto de referencia'}
+                src={galeria[fotoActiva]?.url ?? galeria[0]?.url}
+                alt={sinFotos ? `Foto de referencia: ${nombreCategoria(inmueble.tipo).toLowerCase()}` : `Foto ${fotoActiva + 1} de ${titulo}`}
               />
-              {!inmueble.imagenes.length && <span className="badge-status">Foto de referencia</span>}
+              {sinFotos && <span className="badge-status">Referencia · {nombreCategoria(inmueble.tipo)}</span>}
               <button type="button" className="boton-360" onClick={() => setVer360(true)}>
                 <span className="boton-360-icono" aria-hidden="true">360°</span>
                 {foto360 ? 'Ver en 360°' : 'Demo 360°'}
               </button>
             </div>
-            {inmueble.imagenes.length > 1 && (
+            {galeria.length > 1 && (
               <div className="detalle-miniaturas">
-                {inmueble.imagenes.map((im, i) => (
+                {galeria.map((im, i) => (
                   <button
                     type="button"
                     key={im.id}
@@ -93,6 +97,11 @@ export default function DetalleInmueble({ id }) {
                   </button>
                 ))}
               </div>
+            )}
+            {sinFotos && (
+              <small className="detalle-nota-ref">
+                Imágenes ilustrativas de {nombreCategoria(inmueble.tipo).toLowerCase()}: este inmueble aún no tiene fotos propias.
+              </small>
             )}
             {inmueble.es_mio && (
               <div className="detalle-subir">

@@ -125,8 +125,14 @@ envíe, el botón cambia de "Demo 360°" a "Ver en 360°" con la foto real.
   guardadas en `src/data/ubicacionesPereira.js` (18 de 19; el de la Av. 30 de
   Agosto no se pudo ubicar). Los inmuebles nuevos no salen hasta que el back
   guarde latitud y longitud. El resto del país se agrupa por ciudad.
-- Los inmuebles importados del CSV no tienen fotos: se muestra una foto de
-  referencia marcada como tal hasta que el propietario suba las reales.
+- Los inmuebles importados del CSV no tienen fotos: se muestran **fotos de
+  referencia según el tipo** (`src/utils/fotos.js`). Los 18 tipos del catálogo
+  se agrupan en 12 categorías visuales (apartamento, casa, casa de recreo,
+  finca, lote, local, oficina, consultorio, parqueadero, bodega, habitación,
+  edificio), cada una con varias fotos revisadas a mano. La foto se elige con
+  un hash del id, así el mismo inmueble siempre muestra la misma, y el detalle
+  arma una galería de la misma categoría. Todo va marcado como "Referencia" y
+  las fotos reales que sube el dueño siempre tienen prioridad.
 - La API no tiene endpoint de favoritos: cada cuenta guarda su lista en el
   navegador con la clave `amaru:favoritos:<idUsuario>`, así que no se comparte
   entre dispositivos. Cuando el back tenga `GET/POST/DELETE /favoritos`, solo

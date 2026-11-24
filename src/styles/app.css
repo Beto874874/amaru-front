@@ -1468,3 +1468,11 @@
     color: #c0392b;
     background: #fdf0ee;
 }
+
+/* ---------- Fotos de referencia ---------- */
+.detalle-nota-ref {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+}

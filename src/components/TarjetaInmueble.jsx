@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext.jsx';
 import { capitalizar, formatoArea, formatoCOP } from '../utils/formato.js';
-import { fotoReferencia } from '../utils/fotos.js';
+import { fotoReferencia, nombreCategoria } from '../utils/fotos.js';
 
 /**
  * Tarjeta de un inmueble. `acciones` (opcional) agrega una barra de botones al
@@ -28,7 +28,7 @@ export default function TarjetaInmueble({ inmueble, acciones = null }) {
         {!fotoRota ? (
           <img
             src={foto}
-            alt={fotoReal ? inmueble.nombre : `Foto de referencia: ${inmueble.tipo.toLowerCase()}`}
+            alt={fotoReal ? inmueble.nombre : `Foto de referencia: ${nombreCategoria(inmueble.tipo).toLowerCase()}`}
             loading="lazy"
             onError={() => setFotoRota(true)}
           />
@@ -40,7 +40,7 @@ export default function TarjetaInmueble({ inmueble, acciones = null }) {
           </div>
         )}
         <span className={`badge-status${fotoReal ? ' real' : ''}`}>
-          {inmueble.es_mio ? `Tu inmueble${inmueble.estado !== 'Disponible' ? ` · ${inmueble.estado}` : ''}` : fotoReal ? `✓ ${inmueble.estado}` : 'Foto de referencia'}
+          {inmueble.es_mio ? `Tu inmueble${inmueble.estado !== 'Disponible' ? ` · ${inmueble.estado}` : ''}` : fotoReal ? `✓ ${inmueble.estado}` : `Referencia · ${nombreCategoria(inmueble.tipo)}`}
         </span>
         <button
           type="button"
